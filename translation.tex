@@ -1,53 +1,58 @@
 \section{Translation}\label{sec:translation}
 
-This section will describe a translation of the Action Langage E (which closely ressemble Event Calculus in multiples ways) into Temporal Logic.
-To be more precise, into $LTL_f$.
+This section will describe a translation of the Action Langage E (which closely resemble Event Calculus in multiples ways) into Temporal Logic.
+To be more precise, into $LTL_f$ and $TEL_f$.
 
-The goal is to start from a domaine langage $E=<\Pi,\preceq,\Delta,\Phi>$ and a domain description $D=<\gamma,\eta,\tau>$, and to get a set of temporal propositions $A$ and formulas $F$, such that all formulas of $F$ are true for a finite traces $\pi$ if and only if the corresponding interpretation $H$ of $E$ is a model of $D$.
+The goal is to start from a domain language $E=<\Pi,\preceq,\Delta,\Phi>$ and a domain description $D=<\gamma,\eta,\tau>$, and to get a set of temporal propositions $A$ and formulas $F$, such that all formulas of $F$ are true for a finite traces $\pi$ if and only if the corresponding interpretation $H$ of $E$ is a model of $D$.
 
-\subsection{Naive approach}
+\subsection{$LTL_f$}
 
 \subsubsection{Translating the Domain Language}
 
-To make the translation, we need to start from a domain langage for wich $\Pi$ is a discrete set of timepoint, and $\preceq$ is a total ordering of $\Pi$.
+To make the translation, we need to start from a domain language for which $\Pi$ is a discrete set of timepoint, and $\preceq$ is a total ordering of $\Pi$.
 
-The set $A$ of propositional atoms is composed of the atoms $a_i$, $f_i$, $initiation(f_i)$ and $termination(f_i)$.
+The set $A$ of the following propositional atoms, and only them.
 
 \begin{itemize}
-  \item $\Pi$ and $\preceq$ can be represented by a trace $\pi$ of the same size. (with a $\circ^{t_f}Tail$ or something like that)
-  \item For all $A_i$ in $\Delta$ there is a propositional variable $a_i$.
-  \item For all $F_i$ in $\Phi$ there is a propositional variable $f_i$ and two propositional variables $initiation(f_i)$ and $termination(f_i)$.
+  \item $\Pi$ and $\preceq$ can be represented by a trace $\pi$ of the same size. (with a $\next^{t_f}Tail$ or something like that)
+  \item For all $A$ in $\Delta$ there is a propositional variable $a$.
+  \item For all $F$ in $\Phi$ there is a propositional variable $f$ and two propositional variables $initiation(f)$ and $termination(f)$.
 \end{itemize}
 
-\subsubsection{Axiomes}
+\subsubsection{Axioms}
 
 \begin{itemize}
   \item Common Inertia
-  $$\Box(f_i\rightarrow\circ (termination(f_i) \mathbin{\bm{\mathsf{R}}} f_i))$$
-  $$\Box(\neg f_i\rightarrow\circ (initiation(f_i) \mathbin{\bm{\mathsf{R}}} \neg f_i))$$
-  \item Initiation Inertia $$\Box(initiation(f_i)\rightarrow\circ f_i)$$
-  \item Termination Inertia $$\Box(termination(f_i)\rightarrow\circ \neg f_i)$$
-%  \item Initiation Inertia $$\Box(initiation(f_i)\rightarrow\circ (termination(f_i) \mathbin{\bm{\mathsf{R}}} f_i))$$
-%  \item Termination Inertia $$\Box(termination(f_i)\rightarrow\circ (initiation(f_i) \mathbin{\bm{\mathsf{R}}} \neg f_i))$$
+  $$\alwaysF(f\rightarrow termination(f) \release f)$$
+  $$\alwaysF(\neg f\rightarrow initiation(f) \release \neg f)$$
+  \item Initiation $$\alwaysF(initiation(f)\rightarrow\next f)$$
+  \item Termination $$\alwaysF(termination(f)\rightarrow\next \neg f)$$
+%  \item Initiation Inertia $$\alwaysF(initiation(f_i)\rightarrow\next (termination(f_i) \mathbin{\bm{\mathsf{R}}} f_i))$$
+%  \item Termination Inertia $$\alwaysF(termination(f_i)\rightarrow\next (initiation(f_i) \mathbin{\bm{\mathsf{R}}} \neg f_i))$$
 \end{itemize}
 
 \subsubsection{Translationg the Domain Definition}
 
 \begin{itemize}
-  \item c-proposition\footnote{c-proposition's translation also contains the definition of initiation and termination point for the temporal logic}
-
-  $$\Box(a_i\bigwedge c_i)\rightarrow initiation(f_i)$$ or $$\Box(a_i\bigwedge c_i)\rightarrow termination(f_i)$$
+  \item c-proposition\footnote{c-proposition's translation also place initiation and termination point for the temporal logic}
+  \begin{itemize}
+    \item "$a$ initiates $f$ when $c$" become "$\alwaysF((a\bigwedge c)\rightarrow initiation(f))$"
+    \item "$a$ terminates $f$ when $c$" become "$\alwaysF((a\bigwedge c)\rightarrow termination(f))$"
+  \end{itemize}
   \item h-proposition
-
-  $$\circ^{t_i}f_i$$ or $$\circ^{t_i} \neg f_i$$
+  \begin{itemize}
+    \item "$f$ holds-at $t_i$" become "$\next^{i}f$"
+    \item "$\neg f$ holds-at $t_i$" become "$\next^{i} \neg f$"
+  \end{itemize}
   \item t-proposition
-
-  $$\circ^{t_i}a_i$$
+  \begin{itemize}
+    \item "$a$ happens-at $t_i$" become "$\next^{i}a$"
+  \end{itemize}
 \end{itemize}
 
-\subsubsection{Example}
+\subsection{Example}
 
-Let's take a domaine langage $E=<\Pi,\preceq,\Delta,\Phi>$ with :
+Let's take a domain language $E=<\Pi,\preceq,\Delta,\Phi>$ with :
 \begin{itemize}
   \item $\Pi$ composed of 5 timepoints $t_0$ to $t_4$
   \item $\Delta$ only composed of the action $switch$
@@ -59,7 +64,7 @@ Let's take a domain description $D=<\gamma,\eta,\tau>$ with :
   \item $\gamma$ composed of two c-proposition :
   \begin{itemize}
     \item $switch$ initiates $light$ when $\neg light$.
-    \item $switch$ initiates $\neg light$ when $light$.
+    \item $switch$ terminates $light$ when $light$.
   \end{itemize}
   \item $\eta$ composed of two h-proposition :
   \begin{itemize}
@@ -71,20 +76,20 @@ Let's take a domain description $D=<\gamma,\eta,\tau>$ with :
 
 Once translated we get :
 \begin{itemize}
-  \item The lengh of the trace $lengh(\pi)=5$.
+  \item The length of the trace $length(\pi)=5$.
   \item The set of propositions $A$ composed of $switch$, $light$, $initiation(light)$ and $termination(light)$.
   \item The set of formulas $F$ composed of :
   \begin{itemize}
     \item The formulas taken from the propositions :
-    \item $\Box(switch\bigwedge \neg light)\rightarrow initiation(light)$
-    \item $\Box(switch\bigwedge light)\rightarrow termination(light)$
-    \item $\circ^{1}switch$
-    \item $\circ^{3}switch$
-    \item The formulas taken from the inertia axiomes :
-    \item $\Box(light\rightarrow\circ (termination(light) \mathbin{\bm{\mathsf{R}}} light))$
-    \item $\Box(\neg light\rightarrow\circ (initiation(light) \mathbin{\bm{\mathsf{R}}} \neg light))$
-    \item $\Box(initiation(light)\rightarrow\circ light)$
-    \item $\Box(termination(light)\rightarrow\circ \neg light)$
+    \item $\alwaysF(switch\bigwedge \neg light)\rightarrow initiation(light)$
+    \item $\alwaysF(switch\bigwedge light)\rightarrow termination(light)$
+    \item $\next^{1}switch$
+    \item $\next^{3}switch$
+    \item The formulas taken from the inertia axioms :
+    \item $\alwaysF(light\rightarrow\next (termination(light) \release light))$
+    \item $\alwaysF(\neg light\rightarrow\next (initiation(light) \release \neg light))$
+    \item $\alwaysF(initiation(light)\rightarrow\next light)$
+    \item $\alwaysF(termination(light)\rightarrow\next \neg light)$
   \end{itemize}
 \end{itemize}
 
@@ -100,10 +105,15 @@ Likewise, the resulting set of formulas only has two traces that respect them:
   \item $\{\}\{switch,initiation(light)\}\{light\}\{light,switch,termination(light)\}\{\}$
 \end{itemize}
 
+\subsection{Improvement}
+
+
+
+
 \section{Todo}
 
-\\begin{itemize}
+\begin{itemize}
   \item Reduce the trace size? Do we need all timepoints, or only the ones with actions?
   \item $LTL_f$ into $TEL$ ... into $telingo$
-  \item actions with durations (wich probably will need metric temporal logic)
+  \item actions with duration (which probably will need metric temporal logic)
 \end{itemize}
