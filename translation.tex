@@ -11,111 +11,65 @@ The goal is to start from a domain language $E=<\Pi,\preceq,\Delta,\Phi>$ and a 
 
 To make the translation, we need to start from a domain language for which $\Pi$ is a discrete set of timepoint, and $\preceq$ is a total ordering of $\Pi$.
 
-The set $A$ of the following propositional atoms, and only them.
+The set $A$ is composed of the following propositional atoms, and only them.
 
 \begin{itemize}
-  \item $\Pi$ and $\preceq$ can be represented by a trace $\pi$ of the same size. (with a $\next^{t_f}Tail$ or something like that)
-  \item For all $A$ in $\Delta$ there is a propositional variable $a$.
-  \item For all $F$ in $\Phi$ there is a propositional variable $f$ and two propositional variables $initiation(f)$ and $termination(f)$.
+  %\item $\Pi$ and $\preceq$ can be represented by a trace $\pi$ of the same size. (with a $\next^{t_f}Tail$ or something like that)
+  \item For all $Ac$ in $\Delta$ there is a propositional variable $a$.
+  \item For all $Fl$ in $\Phi$ there is the propositional variables $f$, $initiation(f)$ and $termination(f)$.
 \end{itemize}
 
 \subsubsection{Axioms}
 
-\begin{itemize}
-  \item Common Inertia
-  %$$\alwaysF(f\rightarrow termination(f) \release f)$$
-  %$$\alwaysF(\neg f\rightarrow initiation(f) \release \neg f)$$
-  $$\alwaysF(f \bigwedge \neg termination(f) \rightarrow \wnext f)$$
-  $$\alwaysF(\neg f \bigwedge \neg initiation(f) \rightarrow \wnext\neg f)$$
-  \item Initiation $$\alwaysF(initiation(f)\rightarrow\wnext f)$$
-  \item Termination $$\alwaysF(termination(f)\rightarrow\wnext \neg f)$$
+\begin{description}
+  \item[Common Inertia]
+  For every $Fl$ in $\Phi$ there is theses two formulas in $F$:
+  $$\alwaysF(f\rightarrow termination(f) \release f)$$
+  $$\alwaysF(\neg f\rightarrow initiation(f) \release \neg f)$$
+  %$$\alwaysF(f \bigwedge \neg termination(f) \rightarrow \wnext f)$$
+  %$$\alwaysF(\neg f \bigwedge \neg initiation(f) \rightarrow \wnext\neg f)$$
+  \item[Initiation]
+  For every $Fl$ in $\Phi$ there is this formula in $F$:
+  $$\alwaysF(initiation(f)\rightarrow\wnext f)$$
+  \item[Termination]
+  For every $Fl$ in $\Phi$ there is this formula in $F$:
+  $$\alwaysF(termination(f)\rightarrow\wnext \neg f)$$
 %  \item Initiation Inertia $$\alwaysF(initiation(f_i)\rightarrow\next (termination(f_i) \mathbin{\bm{\mathsf{R}}} f_i))$$
 %  \item Termination Inertia $$\alwaysF(termination(f_i)\rightarrow\next (initiation(f_i) \mathbin{\bm{\mathsf{R}}} \neg f_i))$$
-\end{itemize}
+\end{description}
 
-\subsubsection{Translationg the Domain Definition}
+\subsubsection{Translating the Domain Definition}
 
-\begin{itemize}
-  \item c-proposition\footnote{c-proposition's translation also place initiation and termination point for the temporal logic}
+\begin{description}
+  \item[c-proposition]\footnote{c-proposition's translation also place initiation and termination point for the temporal logic}
   \begin{itemize}
-    \item "$a$ initiates $f$ when $c$" become "$\alwaysF((a\bigwedge c)\rightarrow initiation(f))$"
-    \item "$a$ terminates $f$ when $c$" become "$\alwaysF((a\bigwedge c)\rightarrow termination(f))$"
+    \item For every “$Ac$ initiates $Fl$ when $C$” in $\gamma$ there is theses two formulas in $F$:
+      $$\alwaysF((a\bigwedge c)\rightarrow initiation(f))$$
+      $$\alwaysF(initiation(f)\rightarrow (a\bigwedge c))$$
+    \item For every “$Ac$ terminates $Fl$ when $C$” in $\gamma$ there is theses two formulas in $F$:
+      $$\alwaysF((a\bigwedge c)\rightarrow termination(f))$$
+      $$\alwaysF(termination(f)\rightarrow (a\bigwedge c))$$
   \end{itemize}
-  \item h-proposition
+  \item[h-proposition] $ $
   \begin{itemize}
-    \item "$f$ holds-at $t_i$" become "$\next^{i}f$"
-    \item "$\neg f$ holds-at $t_i$" become "$\next^{i} \neg f$"
+    \item For every “$Fl$ holds-at $t_i$” in $\eta$ there is this formula in $F$:
+      $$\next^{i}f$$
+    \item For every “$\neg Fl$ holds-at $t_i$” in $\eta$ there is this formula in $F$:
+      $$\next^{i} \neg f$$
   \end{itemize}
-  \item t-proposition
+  \item[t-proposition] $ $
   \begin{itemize}
-    \item "$a$ happens-at $t_i$" become "$\next^{i}a$"
+    \item For every “$Ac$ happens-at $t_i$” in $\tau$ there is this formula in $F$:
+      $$\next^{i}a$$
+    \item For all $Ac$ in $\Delta$ and all $t_i$ in $\Pi$, if “$Ac$ happens-at $t_i$” is not in $\tau$ there is this formula in $F$:
+      $$\next^{i}\neg a$$
+      This is needed to ensure completion of the actions.
+
   \end{itemize}
-\end{itemize}
-
-\subsection{Example}
-
-Let's take a domain language $E=<\Pi,\preceq,\Delta,\Phi>$ with :
-\begin{itemize}
-  \item $\Pi$ composed of 5 timepoints $t_0$ to $t_4$
-  \item $\Delta$ only composed of the action $switch$
-  \item $\Phi$ only composed of the action $light$
-\end{itemize}
-
-Let's take a domain description $D=<\gamma,\eta,\tau>$ with :
-\begin{itemize}
-  \item $\gamma$ composed of two c-proposition :
-  \begin{itemize}
-    \item $switch$ initiates $light$ when $\neg light$.
-    \item $switch$ terminates $light$ when $light$.
-  \end{itemize}
-  \item $\eta$ composed of two h-proposition :
-  \begin{itemize}
-    \item $switch$ happens-at $t_1$.
-    \item $switch$ happens-at $t_3$.
-  \end{itemize}
-  \item $\tau$ composed of no t-proposition.
-\end{itemize}
-
-Once translated we get :
-\begin{itemize}
-  \item The length of the trace $length(\pi)=5$.
-  \item The set of propositions $A$ composed of $switch$, $light$, $initiation(light)$ and $termination(light)$.
-  \item The set of formulas $F$ composed of :
-  \begin{itemize}
-    \item The formulas taken from the propositions :
-    \item $\alwaysF(switch\bigwedge \neg light)\rightarrow initiation(light)$
-    \item $\alwaysF(switch\bigwedge light)\rightarrow termination(light)$
-    \item $\next^{1}switch$
-    \item $\next^{3}switch$
-    \item The formulas taken from the inertia axioms :
-    \item $\alwaysF(light\rightarrow\next (termination(light) \release light))$
-    \item $\alwaysF(\neg light\rightarrow\next (initiation(light) \release \neg light))$
-    \item $\alwaysF(initiation(light)\rightarrow\next light)$
-    \item $\alwaysF(termination(light)\rightarrow\next \neg light)$
-  \end{itemize}
-\end{itemize}
-
-We can see that the original domain description had two models:
-\begin{itemize}
-  \item $H(light,t_0)=H(light,t_1)=H(light,t_4)=true$ and $H(light,t_2)=H(light,t_3)=false$
-  \item $H(light,t_0)=H(light,t_1)=H(light,t_4)=false$ and $H(light,t_2)=H(light,t_3)=true$
-\end{itemize}
-
-Likewise, the resulting set of formulas only has two traces that respect them:
-\begin{itemize}
-  \item $\{light\}\{light,switch,termination(light)\}\{\}\{switch,initiation(light)\}\{light\}$
-  \item $\{\}\{switch,initiation(light)\}\{light\}\{light,switch,termination(light)\}\{\}$
-\end{itemize}
+\end{description}
 
 \subsection{Improvement}
 
+TODO
 
-
-
-\section{Todo}
-
-\begin{itemize}
-  \item Reduce the trace size? Do we need all timepoints, or only the ones with actions?
-  \item $LTL_f$ into $TEL$ ... into $telingo$
-  \item actions with duration (which probably will need metric temporal logic)
-\end{itemize}
+% “…”
