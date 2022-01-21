@@ -23,10 +23,12 @@ The set $A$ of the following propositional atoms, and only them.
 
 \begin{itemize}
   \item Common Inertia
-  $$\alwaysF(f\rightarrow termination(f) \release f)$$
-  $$\alwaysF(\neg f\rightarrow initiation(f) \release \neg f)$$
-  \item Initiation $$\alwaysF(initiation(f)\rightarrow\next f)$$
-  \item Termination $$\alwaysF(termination(f)\rightarrow\next \neg f)$$
+  %$$\alwaysF(f\rightarrow termination(f) \release f)$$
+  %$$\alwaysF(\neg f\rightarrow initiation(f) \release \neg f)$$
+  $$\alwaysF(f \bigwedge \neg termination(f) \rightarrow \wnext f)$$
+  $$\alwaysF(\neg f \bigwedge \neg initiation(f) \rightarrow \wnext\neg f)$$
+  \item Initiation $$\alwaysF(initiation(f)\rightarrow\wnext f)$$
+  \item Termination $$\alwaysF(termination(f)\rightarrow\wnext \neg f)$$
 %  \item Initiation Inertia $$\alwaysF(initiation(f_i)\rightarrow\next (termination(f_i) \mathbin{\bm{\mathsf{R}}} f_i))$$
 %  \item Termination Inertia $$\alwaysF(termination(f_i)\rightarrow\next (initiation(f_i) \mathbin{\bm{\mathsf{R}}} \neg f_i))$$
 \end{itemize}
