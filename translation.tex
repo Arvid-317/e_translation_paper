@@ -23,7 +23,7 @@ The set $A$ is composed of the following propositional atoms, and only them.
 
 \begin{description}
   \item[Common Inertia]
-  For every $Fl$ in $\Phi$ there is theses two formulas in $F$:
+  For every $Fl$ in $\Phi$ we add in $F$:
   \begin{equation}\tag{$A.1$}
     \alwaysF(f\rightarrow termination(f) \release f)
   \end{equation}
@@ -33,12 +33,12 @@ The set $A$ is composed of the following propositional atoms, and only them.
   %$$\alwaysF(f \bigwedge \neg termination(f) \rightarrow \wnext f)$$
   %$$\alwaysF(\neg f \bigwedge \neg initiation(f) \rightarrow \wnext\neg f)$$
   \item[Initiation]
-  For every $Fl$ in $\Phi$ there is this formula in $F$:
+  For every $Fl$ in $\Phi$ we add in $F$:
   \begin{equation}\tag{$A.3$}
     \alwaysF(initiation(f)\rightarrow\wnext f)
   \end{equation}
   \item[Termination]
-  For every $Fl$ in $\Phi$ there is this formula in $F$:
+  For every $Fl$ in $\Phi$ we add in $F$:
   \begin{equation}\tag{$A.4$}
     \alwaysF(termination(f)\rightarrow\wnext \neg f)
   \end{equation}
@@ -51,42 +51,42 @@ The set $A$ is composed of the following propositional atoms, and only them.
 \begin{description}
   \item[c-proposition]\footnote{c-proposition's translation also place initiation and termination point for the temporal logic}
   \begin{itemize}
-    \item For every “$Ac$ initiates $Fl$ when $C$” in $\gamma$ there is theses two formulas in $F$:
+    \item For every “$Ac$ initiates $Fl$ when $C$” in $\gamma$ we add in $F$:
     \begin{equation}\tag{$P_c.1$}
       \alwaysF((a\bigwedge c)\rightarrow initiation(f))
     \end{equation}
-    \begin{equation}\tag{$P_c.2$}
-      \alwaysF(initiation(f)\rightarrow (a\bigwedge c))
-    \end{equation}
-    \item For every “$Ac$ terminates $Fl$ when $C$” in $\gamma$ there is theses two formulas in $F$:
+%    \begin{equation}\tag{$P_c.2$}
+%      \alwaysF(initiation(f)\rightarrow (a\bigwedge c))
+%    \end{equation}
+    \item For every “$Ac$ terminates $Fl$ when $C$” in $\gamma$ we add in $F$:
     \begin{equation}\tag{$P_c.3$}
       \alwaysF((a\bigwedge c)\rightarrow termination(f))
     \end{equation}
-    \begin{equation}\tag{$P_c.4$}
-      \alwaysF(termination(f)\rightarrow (a\bigwedge c))
-    \end{equation}
+%    \begin{equation}\tag{$P_c.4$}
+%      \alwaysF(termination(f)\rightarrow (a\bigwedge c))
+%    \end{equation}
   \end{itemize}
   \item[h-proposition] $ $
   \begin{itemize}
-    \item For every “$Fl$ holds-at $t_i$” in $\eta$ there is this formula in $F$:
+    \item For every “$Fl$ holds-at $t_i$” in $\eta$ we add in $F$:
     \begin{equation}\tag{$P_h.1$}
       \next^{i}f
     \end{equation}
-    \item For every “$\neg Fl$ holds-at $t_i$” in $\eta$ there is this formula in $F$:
+    \item For every “$\neg Fl$ holds-at $t_i$” in $\eta$ we add in $F$:
     \begin{equation}\tag{$P_h.2$}
       \next^{i} \neg f
     \end{equation}
   \end{itemize}
   \item[t-proposition] $ $
   \begin{itemize}
-    \item For every “$Ac$ happens-at $t_i$” in $\tau$ there is this formula in $F$:
+    \item For every “$Ac$ happens-at $t_i$” in $\tau$ we add in $F$:
     \begin{equation}\tag{$P_t.1$}
       \next^{i}a
     \end{equation}
-    \item For all $Ac$ in $\Delta$ and all $t_i$ in $\Pi$, if “$Ac$ happens-at $t_i$” is not in $\tau$ there is this formula in $F$:
-    \begin{equation}\tag{$P_t.2$}
-      \next^{i}\neg a
-    \end{equation}
+%    \item For all $Ac$ in $\Delta$ and all $t_i$ in $\Pi$, if “$Ac$ happens-at $t_i$” is not in $\tau$ we add in $F$:
+%    \begin{equation}\tag{$P_t.2$}
+%      \next^{i}\neg a
+%    \end{equation}
       This is needed to ensure completion of the actions.
 
   \end{itemize}
@@ -94,19 +94,19 @@ The set $A$ is composed of the following propositional atoms, and only them.
 
 \subsection{Alternatives}
 
-It is possible to replace the axiomes described earlier with one on those sets of atoms.
+In this section, I wanted to explore alternative ways to express the axioms of $E$.
 
 \subsubsection{Combined Axioms}
 
 To be closer to the semantics of the event calculus (the formalism that action language E want to emulate), we can describe Inertia and Initiation/Termination in one go like this:
 \begin{description}
   \item[Initiation]
-  For every $Fl$ in $\Phi$ there is this formula in $F$:
+  For every $Fl$ in $\Phi$ we add in $F$:
   \begin{equation}\tag{$CA.1$}
     \alwaysF(initiation(f)\rightarrow\wnext(termination(f) \release f))
   \end{equation}
   \item[Termination]
-  For every $Fl$ in $\Phi$ there is this formula in $F$:
+  For every $Fl$ in $\Phi$ we add in $F$:
   \begin{equation}\tag{$CA.2$}
     \alwaysF(termination(f)\rightarrow\wnext(initiation(f) \release \neg f))
   \end{equation}
@@ -116,19 +116,18 @@ To be closer to the semantics of the event calculus (the formalism that action l
 
 \begin{itemize}
   \item
-    For every $Fl$ in $\Phi$ there is this formula in $F$:
+    For every $Fl$ in $\Phi$ we add in $F$:
     \begin{equation}\tag{$SA.1$}
-      \alwaysF(((\previous initiation(f)) \trigger \neg termination(f)) \rightarrow f)
+      \alwaysF((f \trigger \neg termination(f)) \rightarrow f)
     \end{equation}
   \item
-    For every $Fl$ in $\Phi$ there is this formula in $F$:
+    For every $Fl$ in $\Phi$ we add in $F$:
     \begin{equation}\tag{$SA.2$}
-      \alwaysF(((\previous termination(f)) \trigger \neg initiation(f)) \rightarrow \neg f)
+      \alwaysF((\neg f \trigger \neg initiation(f)) \rightarrow \neg f)
     \end{equation}
 \end{itemize}
 
-The $(\previous initiation(f)) \trigger \neg termination(f)$ used here represent the negation of the concept of $clipped$ used in EC.
-Respectively, $(\previous termination(f)) \trigger \neg initiation(f)$ represent the negation of the concept of $unclipped$.
+Those two formulas tries to adapt the concept of $clipped$ and $unclipped$ used in Event Calculus.
 
 \subsubsection{Iteratifs Axioms}
 
@@ -136,12 +135,12 @@ In the the Discrete Event Calculus, we only describe a time-point depending of t
 
 \begin{itemize}
   \item
-    For every $Fl$ in $\Phi$ there is this formula in $F$:
+    For every $Fl$ in $\Phi$ we add in $F$:
     \begin{equation}\tag{$IA.1$}
       \alwaysF((f \bigwedge \neg termination(f)) \rightarrow f)
     \end{equation}
   \item
-    For every $Fl$ in $\Phi$ there is this formula in $F$:
+    For every $Fl$ in $\Phi$ we add in $F$:
     \begin{equation}\tag{$IA.2$}
       \alwaysF((\neg f \bigwedge \neg initiation(f)) \rightarrow \neg f)
     \end{equation}
