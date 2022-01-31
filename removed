@@ -1,0 +1,17 @@
+
+
+\subsubsection{Combined Axioms}
+
+To be closer to the semantics of the event calculus (the formalism that action language E want to emulate), we can describe Inertia and Initiation/Termination in one go like this:
+\begin{description}
+  \item[Initiation]
+  For every $Fl$ in $\Phi$ we add in $F$:
+  \begin{equation}\tag{$CA.1$}
+    \alwaysF(initiation(f)\rightarrow\wnext(termination(f) \release f))
+  \end{equation}
+  \item[Termination]
+  For every $Fl$ in $\Phi$ we add in $F$:
+  \begin{equation}\tag{$CA.2$}
+    \alwaysF(termination(f)\rightarrow\wnext(initiation(f) \release \neg f))
+  \end{equation}
+\end{description}

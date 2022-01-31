@@ -1,0 +1,89 @@
+\section{Translation into $telingo$}\label{sec:translation_telingo}
+
+This section will describe a translation of the Action Language E into telingo.
+
+The goal is to start from a domain language $E=<\Pi,\preceq,\Delta,\Phi>$ and a domain description $D=<\gamma,\eta,\tau>$, and to get a logic program $F$ such that all assignment of $F$ is a stable model of it if and only if the corresponding interpretation $H$ of $E$ is a model of $D$.
+
+This translation is an adaptation of the iterative axiomatisation proposed in \ref{sec:iter}.
+
+\subsection{Axioms}
+
+\begin{description}
+  \item[Common Inertia]
+    For every $Fl$ in $\Phi$ we add in the $dynamic$ part of $F$:
+    \begin{lstlisting}
+      Fl :- 'Fl, not 'term(Fl).
+    \end{lstlisting}
+  \item[Initiation]
+    For every $Fl$ in $\Phi$ we add in the $dynamic$ part of $F$:
+    \begin{lstlisting}
+      Fl :- 'init(Fl).
+    \end{lstlisting}
+  \item[Fluents Initiation]
+    For every $Fl$ in $\Phi$ we add in the $initial$ part of $F$:
+    \begin{lstlisting}
+      {Fl}.
+    \end{lstlisting}
+\end{description}
+
+\subsection{Translating the Domain Definition}
+
+\begin{description}
+  \item[c-proposition] $ $
+    \begin{itemize}
+    \item For every “$Ac$ initiates $Fl$ when $C$” in $\gamma$ we add in the $always$ part of $F$:
+    \begin{lstlisting}
+      init(Fl) :- Ac, C.
+    \end{lstlisting}
+    \item For every “$Ac$ terminates $Fl$ when $C$” in $\gamma$ we add in the $always$ part of $F$:
+    \begin{lstlisting}
+      term(Fl) :- Ac, C.
+    \end{lstlisting}
+  \end{itemize}
+  \item[h-proposition] $ $
+  \begin{itemize}
+    \item For every “$Fl$ holds-at $t_i$” in $\eta$ we add in the $initial$ part of $F$:
+    \begin{lstlisting}
+      Fl'.
+      \end{lstlisting}
+    with the number of $'$ defined by $t_i$.
+    \item For every “$\neg Fl$ holds-at $t_i$” in $\eta$ we add in the $initial$ part of $F$:
+    \begin{lstlisting}
+      not Fl'.
+      \end{lstlisting}
+    with the number of $'$ defined by $t_i$.
+  \end{itemize}
+  \item[t-proposition] $ $
+  \begin{itemize}
+    \item For every “$Ac$ happens-at $t_i$” in $\tau$ we add in the $initial$ part of $F$:
+    \begin{lstlisting}
+      Ac'.
+      \end{lstlisting}
+    with the number of $'$ defined by $t_i$.
+  \end{itemize}
+\end{description}
+
+\section{Example of a telingo encoding}
+
+We take the same example than before.
+This is what the translation give us.
+
+\begin{lstlisting}
+#program initial.
+
+switch'.
+switch'''.
+
+{light}.
+not light''''.
+
+#program always.
+
+init(light) :- switch, not light.
+term(light) :- switch, light.
+
+#program dynamic.
+
+light :- 'init(light).
+light :- 'light, not 'term(light).
+\end{lstlisting}
