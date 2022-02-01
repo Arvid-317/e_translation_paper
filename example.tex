@@ -35,6 +35,9 @@ Once translated we get :
 %    \item $\alwaysF(termination(light)\rightarrow (switch\bigwedge light))$
     \item $\next^{1}switch$
     \item $\next^{3}switch$
+    \item $\next^{0}\neg switch$
+    \item $\next^{2}\neg switch$
+    \item $\next^{4}\neg switch$
     \item The formulas taken from the inertia axioms :
     \item $\alwaysF(light\rightarrow (termination(light) \release light))$
     \item $\alwaysF(\neg light\rightarrow (initiation(light) \release \neg light))$
@@ -51,6 +54,6 @@ We can see that the original domain description had two models:
 
 Likewise, the resulting set of formulas only has two traces that respect them:
 \begin{itemize}
-  \item $\{light\}\{light,switch,termination(light)\}\{\}\{switch,initiation(light)\}\{light\}$
-  \item $\{\}\{switch,initiation(light)\}\{light\}\{light,switch,termination(light)\}\{\}$
+  \item $\{light\}\{light,switch,termination(light)\}\{\}\{switch,initiation(light)\}(\{light\})^*$
+  \item $\{\}\{switch,initiation(light)\}\{light\}\{light,switch,termination(light)\}(\{\})^*$
 \end{itemize}

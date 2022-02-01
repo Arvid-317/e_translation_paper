@@ -80,17 +80,13 @@ The set $A$ is composed of the following propositional atoms, and only them.
     \begin{equation}\tag{$P_t.1$}
       \next^{i}a
     \end{equation}
-%    \item For all $Ac$ in $\Delta$ and all $t_i$ in $\Pi$, if “$Ac$ happens-at $t_i$” is not in $\tau$ we add in $F$:
-%    \begin{equation}\tag{$P_t.2$}
-%      \next^{i}\neg a
-%    \end{equation}
-%      This is needed to ensure completion of the actions.
+    \item For all $Ac$ in $\Delta$ and all $t_i$ in $\Pi$, if “$Ac$ happens-at $t_i$” is not in $\tau$ we add in $F$:
+    \begin{equation}\tag{$P_t.2$}
+      \next^{i}\neg a
+    \end{equation}
+      This is needed to ensure completion of the actions.
   \end{itemize}
 \end{description}
-
-On top of that, to ensure completion of the actions occurrences and the effects of actions, we can do a circumcription of $F$.
-
-$$CIRC[F;a_1,...,a_n,initiate,terminate]$$
 
 \subsection{Alternative Axiomatizations}
 
