@@ -15,14 +15,34 @@
 
 \begin{document}
 
-\title{Translating Action Langage $E$ into $LTL$ and $TEL$}
+\title{Translating Action Langage $E$ into $LTL_f$ and $TEL_f$}
 
 \author{%
-  Author\\
+  Etienne Tignon\\
   University of Potsdam, Germany
 }
 
 \maketitle
+
+\section{Action Langage E}
+This paper describe a translation of the Action Language E (which closely resemble Event Calculus in multiples ways) into $LTL_f$ and $TEL_f$.
+
+The goal is to start from a domain language $E=\langle T,A,F\rangle$ containing :
+\begin{itemize}
+  \item $T$ a set of $n$ natural numbers from $0$ to $n-1$, representing timepoints.
+  \item $A$ a set of actions.
+  \item $F$ a set of fluents.
+\end{itemize}
+and a domain description $D$ containing the propositions:
+\begin{itemize}
+  \item $a$ initiates $f$ when $c$.\footnote{$c$ is a set of fluent and negated fluent}
+  \item $a$ terminates $f$ when $c$.\footnotemark[1]
+  \item $a$ happens-at $t$.
+  \item $f$ holds-at $t$.
+  \item $\neg f$ holds-at $t$.
+\end{itemize}
+
+and to get a set of temporal propositions $A$ and formulas $F$, such that all formulas of $F$ are true for a finite traces $\pi$ if and only if the corresponding interpretation $H$ of $E$ is a model of $D$.
 
 \input{translation}
 \input{example}

@@ -1,36 +1,33 @@
 \section{Translation into $TEL$}\label{sec:translation_e}
 
-This section will describe a translation of the Action Language E into Temporal Equilibrium Logic.
-
-The goal is to start from a domain language $E=<\Pi,\preceq,\Delta,\Phi>$ and a domain description $D=<\gamma,\eta,\tau>$, and to get a set of temporal propositions $A$ and formulas $F$, such that all formulas of $F$ are true for a finite traces $\pi$ if and only if the corresponding interpretation $H$ of $E$ is a model of $D$.
-
 \subsection{Translating the Domain Language}
 
 This translation is the same than in \ref{sec:trans_dom_ltl}.
 
 \begin{itemize}
   %\item $\Pi$ and $\preceq$ can be represented by a trace $\pi$ of the same size. (with a $\next^{t_f}Tail$ or something like that)
-  \item For all $Ac$ in $\Delta$ there is a propositional variable $a$.
-  \item For all $Fl$ in $\Phi$ there is the propositional variables $f$, $initiation(f)$ and $termination(f)$.
+  \item For all $a$ in $\Delta$ there is a propositional variable $a$.
+  \item For all $f$ in $\Phi$ there are the propositional variables $f$, $initiation(f)$ and $termination(f)$.
 \end{itemize}
 
 \subsection{Axioms}
 
-In Equilibrium Logic, some of the axiomes described in \ref{sec:trans_ax_ltl} are useless.
+The advantage of equilibrium logic is a built-in completion of every atoms.
+But this completion is defined by the presence of atoms in the consequences of implication.
+The formula $A.1$ of \ref{sec:trans_ax_ltl} can't be used here, for the presence of $termination(f)$ in the head make his presence possible in unwarranted states.
+So this axiomatisation is based on \label{sec:sec}.
 
 \begin{description}
-  \item[Common Inertia]
-  For every $Fl$ in $\Phi$ we add in $F$:
-  \begin{equation}\tag{$A.1$}
-    \alwaysF(f\rightarrow termination(f) \release f)
-  \end{equation}
-  %$$\alwaysF(f \land \neg termination(f) \rightarrow \wnext f)$$
-  %$$\alwaysF(\neg f \land \neg initiation(f) \rightarrow \wnext\neg f)$$
+  \item[Inertia]
+    For every $f$ in $\Phi$ we add in $F$:
+    \begin{equation}\tag{$A.1$}\label{sec:sec}
+      \alwaysF((f \trigger \neg termination(f)) \rightarrow f)
+    \end{equation}
   \item[Initiation]
-  For every $Fl$ in $\Phi$ we add in $F$:
-  \begin{equation}\tag{$A.2$}
-    \alwaysF(initiation(f)\rightarrow\wnext f)
-  \end{equation}
+    For every $f$ in $\Phi$ we add in $F$:
+    \begin{equation}\tag{$A.2$}
+      \alwaysF(initiation(f)\rightarrow\wnext f)
+    \end{equation}
 %  \item Initiation Inertia $$\alwaysF(initiation(f_i)\rightarrow\next (termination(f_i) \mathbin{\bm{\mathsf{R}}} f_i))$$
 %  \item Termination Inertia $$\alwaysF(termination(f_i)\rightarrow\next (initiation(f_i) \mathbin{\bm{\mathsf{R}}} \neg f_i))$$
 \end{description}
@@ -38,8 +35,8 @@ In Equilibrium Logic, some of the axiomes described in \ref{sec:trans_ax_ltl} ar
 On top of them, we also need an axiom to break the non-completion of the fluents.
 
 \begin{description}
-  \item[Fluents Initiation]
-  For every $Fl$ in $\Phi$ we add in $F$:
+  \item[Fluents Initial State]
+  For every $f$ in $\Phi$ we add in $F$:
   \begin{equation}\tag{$A.3$}
     f \lor \neg f
   \end{equation}
@@ -52,14 +49,14 @@ This translation is the same than in \ref{sec:trans_def_ltl}.
 \begin{description}
   \item[c-proposition]\footnote{c-proposition's translation also place initiation and termination point for the temporal logic}
   \begin{itemize}
-    \item For every “$Ac$ initiates $Fl$ when $C$” in $\gamma$ we add in $F$:
+    \item For every “$a$ initiates $f$ when $c$” in $\gamma$ we add in $F$:
     \begin{equation}\tag{$P_c.1$}
       \alwaysF((a\land c)\rightarrow initiation(f))
     \end{equation}
 %    \begin{equation}\tag{$P_c.2$}
 %      \alwaysF(initiation(f)\rightarrow (a\land c))
 %    \end{equation}
-    \item For every “$Ac$ terminates $Fl$ when $C$” in $\gamma$ we add in $F$:
+    \item For every “$a$ terminates $f$ when $c$” in $\gamma$ we add in $F$:
     \begin{equation}\tag{$P_c.3$}
       \alwaysF((a\land c)\rightarrow termitranslation_e0nation(f))
     \end{equation}
@@ -69,22 +66,22 @@ This translation is the same than in \ref{sec:trans_def_ltl}.
   \end{itemize}
   \item[h-proposition] $ $
   \begin{itemize}
-    \item For every “$Fl$ holds-at $t_i$” in $\eta$ we add in $F$:
+    \item For every “$f$ holds-at $t_i$” in $\eta$ we add in $F$:
     \begin{equation}\tag{$P_h.1$}
       \next^{i}f
     \end{equation}
-    \item For every “$\neg Fl$ holds-at $t_i$” in $\eta$ we add in $F$:
+    \item For every “$\neg f$ holds-at $t_i$” in $\eta$ we add in $F$:
     \begin{equation}\tag{$P_h.2$}
       \next^{i} \neg f
     \end{equation}
   \end{itemize}
   \item[t-proposition] $ $
   \begin{itemize}
-    \item For every “$Ac$ happens-at $t_i$” in $\tau$ we add in $F$:
+    \item For every “$a$ happens-at $t_i$” in $\tau$ we add in $F$:
     \begin{equation}\tag{$P_t.1$}
       \next^{i}a
     \end{equation}
-%    \item For all $Ac$ in $\Delta$ and all $t_i$ in $\Pi$, if “$Ac$ happens-at $t_i$” is not in $\tau$ we add in $F$:
+%    \item For all $a$ in $\Delta$ and all $t_i$ in $\Pi$, if “$a$ happens-at $t_i$” is not in $\tau$ we add in $F$:
 %    \begin{equation}\tag{$P_t.2$}
 %      \next^{i}\neg a
 %    \end{equation}
@@ -98,40 +95,18 @@ Since we are in Equilibrium Logic, we do not need to reinforce completion of the
 
 In this section, I wanted to explore alternative ways to express the axioms of $E$.
 
-\subsubsection{SEC Axioms}
-
-\begin{itemize}
-  \item
-    For every $Fl$ in $\Phi$ we add in $F$:
-    \begin{equation}\tag{$SA.1$}
-      \alwaysF((f \trigger \neg termination(f)) \rightarrow f)
-    \end{equation}
-  \item
-    For every $Fl$ in $\Phi$ we add in $F$:
-    \begin{equation}\tag{$SA.2$}
-      \alwaysF(initiation(f)\rightarrow\wnext f)
-    \end{equation}
-  \item
-    For every $Fl$ in $\Phi$ we add in $F$:
-    \begin{equation}\tag{$A.3$}
-      f \lor \neg f
-    \end{equation}
-\end{itemize}
-
-The first formula tries to adapt the concept of $clipped$ used in Event Calculus.
-
 \subsubsection{Iteratifs Axioms}\label{sec:iter}
 
 In the the Discrete Event Calculus, we only describe a time-point depending of the previous one.
 
 \begin{itemize}
   \item
-    For every $Fl$ in $\Phi$ we add in $F$:
+    For every $f$ in $\Phi$ we add in $F$:
     \begin{equation}\tag{$IA.1$}
       \alwaysF((f \land \neg termination(f)) \rightarrow f)
     \end{equation}
   \item
-    For every $Fl$ in $\Phi$ we add in $F$:
+    For every $f$ in $\Phi$ we add in $F$:
     \begin{equation}\tag{$IA.2$}
       \alwaysF((\neg f \land \neg initiation(f)) \rightarrow \neg f)
     \end{equation}

@@ -4,7 +4,7 @@ Let's take a domain language $E=<\Pi,\preceq,\Delta,\Phi>$ with :
 \begin{itemize}
   \item $\Pi$ composed of 5 timepoints $t_0$ to $t_4$
   \item $\Delta$ only composed of the action $switch$
-  \item $\Phi$ only composed of the action $light$
+  \item $\Phi$ only composed of the fluent $light$
 \end{itemize}
 
 Let's take a domain description $D=<\gamma,\eta,\tau>$ with :
@@ -26,9 +26,9 @@ Once translated we get :
 \begin{itemize}
   %\item The length of the trace $length(\pi)=5$.
   \item The set of propositions $A$ composed of $switch$, $light$, $initiation(light)$ and $termination(light)$.
-  \item The set of formulas $F$ composed of :
+  \item The set of formulas $F$ composed of:
   \begin{itemize}
-    \item The formulas taken from the propositions :
+    \item The formulas taken from the propositions:
     \item $\alwaysF((switch\bigwedge \neg light)\rightarrow initiation(light))$
 %    \item $\alwaysF(initiation(light)\rightarrow (switch\bigwedge \neg light))$
     \item $\alwaysF((switch\bigwedge light)\rightarrow termination(light))$
@@ -38,7 +38,7 @@ Once translated we get :
     \item $\next^{0}\neg switch$
     \item $\next^{2}\neg switch$
     \item $\next^{4}\neg switch$
-    \item The formulas taken from the inertia axioms :
+    \item The formulas taken from the inertia axioms:
     \item $\alwaysF(light\rightarrow (termination(light) \release light))$
     \item $\alwaysF(\neg light\rightarrow (initiation(light) \release \neg light))$
     \item $\alwaysF(initiation(light)\rightarrow\wnext light)$
