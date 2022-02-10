@@ -4,7 +4,7 @@
 
 To make the translation, we need to start from a domain language for which $\Pi$ is a discrete set of timepoint, and $\preceq$ is a total ordering of $\Pi$.
 
-The set $A$ is composed of the following propositional atoms, and only them.
+The set $S_a$ is composed of the following propositional atoms:
 
 \begin{itemize}
   %\item $\Pi$ and $\preceq$ can be represented by a trace $\pi$ of the same size. (with a $\next^{t_f}Tail$ or something like that)
@@ -16,7 +16,7 @@ The set $A$ is composed of the following propositional atoms, and only them.
 
 \begin{description}
   \item[Inertia]
-  For every $f$ in $\Phi$ we add in $F$:
+  For every $f$ in $\Phi$ we add in $S_f$:
   \begin{equation}\tag{$A.1$}
     \alwaysF(f\rightarrow termination(f) \release f)
   \end{equation}
@@ -26,12 +26,12 @@ The set $A$ is composed of the following propositional atoms, and only them.
   %$$\alwaysF(f \bigwedge \neg termination(f) \rightarrow \wnext f)$$
   %$$\alwaysF(\neg f \bigwedge \neg initiation(f) \rightarrow \wnext\neg f)$$
   \item[Initiation]
-  For every $f$ in $\Phi$ we add in $F$:
+  For every $f$ in $\Phi$ we add in $S_f$:
   \begin{equation}\tag{$A.3$}
     \alwaysF(initiation(f)\rightarrow\wnext f)
   \end{equation}
   \item[Termination]
-  For every $f$ in $\Phi$ we add in $F$:
+  For every $f$ in $\Phi$ we add in $S_f$:
   \begin{equation}\tag{$A.4$}
     \alwaysF(termination(f)\rightarrow\wnext \neg f)
   \end{equation}
@@ -44,19 +44,19 @@ The set $A$ is composed of the following propositional atoms, and only them.
 \begin{description}
   \item[c-proposition]\footnote{c-proposition's translation also place initiation and termination point for the temporal logic}
   \begin{itemize}
-    \item For every “$a$ initiates $f$ when $c$” in $\gamma$ we add in $F$:
+    \item For every “$a$ initiates $f$ when $c$” in $\gamma$ we add in $S_f$:
     \begin{equation}\tag{$P_c.1$}
       \alwaysF((a\land c)\rightarrow initiation(f))
     \end{equation}
-    \item For every $f$ in $\Phi$ we add in $F$:
+    \item For every $f$ in $\Phi$ we add in $S_f$:
     \begin{equation}\tag{$P_c.2$}
       \alwaysF(\bigwedge(\neg a_i\lor \neg c_i)\rightarrow \neg initiation(f))
     \end{equation}
-    \item For every “$a$ terminates $f$ when $c$” in $\gamma$ we add in $F$:
+    \item For every “$a$ terminates $f$ when $c$” in $\gamma$ we add in $S_f$:
     \begin{equation}\tag{$P_c.3$}
       \alwaysF((a\land c)\rightarrow termination(f))
     \end{equation}
-    \item For every $f$ in $\Phi$ we add in $F$:
+    \item For every $f$ in $\Phi$ we add in $S_f$:
     \begin{equation}\tag{$P_c.4$}
       \alwaysF(\bigwedge(\neg a_i\lor \neg c_i)\rightarrow \neg termination(f))
     \end{equation}
@@ -66,22 +66,22 @@ The set $A$ is composed of the following propositional atoms, and only them.
   \end{itemize}
   \item[h-proposition] $ $
   \begin{itemize}
-    \item For every “$f$ holds-at $t_i$” in $\eta$ we add in $F$:
+    \item For every “$f$ holds-at $t_i$” in $\eta$ we add in $S_f$:
     \begin{equation}\tag{$P_h.1$}
       \next^{i}f
     \end{equation}
-    \item For every “$\neg f$ holds-at $t_i$” in $\eta$ we add in $F$:
+    \item For every “$\neg f$ holds-at $t_i$” in $\eta$ we add in $S_f$:
     \begin{equation}\tag{$P_h.2$}
       \next^{i} \neg f
     \end{equation}
   \end{itemize}
   \item[t-proposition] $ $
   \begin{itemize}
-    \item For every “$a$ happens-at $t_i$” in $\tau$ we add in $F$:
+    \item For every “$a$ happens-at $t_i$” in $\tau$ we add in $S_f$:
     \begin{equation}\tag{$P_t.1$}
       \next^{i}a
     \end{equation}\label{sec:trans_def_ltl}
-    \item For all $a$ in $\Delta$ and all $t_i$ in $\Pi$, if “$a$ happens-at $t_i$” is not in $\tau$ we add in $F$:
+    \item For all $a$ in $\Delta$ and all $t_i$ in $\Pi$, if “$a$ happens-at $t_i$” is not in $\tau$ we add in $S_f$:
     \begin{equation}\tag{$P_t.2$}
       \next^{i}\neg a
     \end{equation}
@@ -97,12 +97,12 @@ In this section, I wanted to explore alternative ways to express the axioms of $
 
 \begin{itemize}
   \item
-    For every $f$ in $\Phi$ we add in $F$:
+    For every $f$ in $\Phi$ we add in $S_f$:
     \begin{equation}\tag{$SA.1$}
       \alwaysF((f \trigger \neg termination(f)) \rightarrow f)
     \end{equation}
   \item
-    For every $f$ in $\Phi$ we add in $F$:
+    For every $f$ in $\Phi$ we add in $S_f$:
     \begin{equation}\tag{$SA.2$}
       \alwaysF((\neg f \trigger \neg initiation(f)) \rightarrow \neg f)
     \end{equation}
@@ -116,12 +116,12 @@ In the the Discrete Event Calculus, we only describe a time-point depending of t
 
 \begin{itemize}
   \item
-    For every $f$ in $\Phi$ we add in $F$:
+    For every $f$ in $\Phi$ we add in $S_f$:
     \begin{equation}\tag{$IA.1$}
       \alwaysF((f \land \neg termination(f)) \rightarrow f)
     \end{equation}
   \item
-    For every $f$ in $\Phi$ we add in $F$:
+    For every $f$ in $\Phi$ we add in $S_f$:
     \begin{equation}\tag{$IA.2$}
       \alwaysF((\neg f \land \neg initiation(f)) \rightarrow \neg f)
     \end{equation}

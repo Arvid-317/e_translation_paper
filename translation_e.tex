@@ -21,7 +21,7 @@ So this axiomatisation is based on \label{sec:sec}.
   \item[Inertia]
     For every $f$ in $\Phi$ we add in $F$:
     \begin{equation}\tag{$A.1$}\label{sec:sec}
-      \alwaysF((f \trigger \neg termination(f)) \rightarrow f)
+      \alwaysF(((\previous \neg termination(f)) \since f) \rightarrow f)
     \end{equation}
   \item[Initiation]
     For every $f$ in $\Phi$ we add in $F$:
@@ -49,16 +49,16 @@ This translation is the same than in \ref{sec:trans_def_ltl}.
 \begin{description}
   \item[c-proposition]\footnote{c-proposition's translation also place initiation and termination point for the temporal logic}
   \begin{itemize}
-    \item For every “$a$ initiates $f$ when $c$” in $\gamma$ we add in $F$:
+    \item For every “$a$ initiates $f$ when $c$” in $D$ we add in $F$:
     \begin{equation}\tag{$P_c.1$}
       \alwaysF((a\land c)\rightarrow initiation(f))
     \end{equation}
 %    \begin{equation}\tag{$P_c.2$}
 %      \alwaysF(initiation(f)\rightarrow (a\land c))
 %    \end{equation}
-    \item For every “$a$ terminates $f$ when $c$” in $\gamma$ we add in $F$:
+    \item For every “$a$ terminates $f$ when $c$” in $D$ we add in $F$:
     \begin{equation}\tag{$P_c.3$}
-      \alwaysF((a\land c)\rightarrow termitranslation_e0nation(f))
+      \alwaysF((a\land c)\rightarrow termination(f))
     \end{equation}
 %    \begin{equation}\tag{$P_c.4$}
 %      \alwaysF(termination(f)\rightarrow (a\land c))
@@ -66,22 +66,22 @@ This translation is the same than in \ref{sec:trans_def_ltl}.
   \end{itemize}
   \item[h-proposition] $ $
   \begin{itemize}
-    \item For every “$f$ holds-at $t_i$” in $\eta$ we add in $F$:
+    \item For every “$f$ holds-at $t_i$” in $D$ we add in $F$:
     \begin{equation}\tag{$P_h.1$}
-      \next^{i}f
+      \next^{i}(\neg f\rightarrow \bot)
     \end{equation}
-    \item For every “$\neg f$ holds-at $t_i$” in $\eta$ we add in $F$:
+    \item For every “$\neg f$ holds-at $t_i$” in $D$ we add in $F$:
     \begin{equation}\tag{$P_h.2$}
-      \next^{i} \neg f
+      \next^{i}(f\rightarrow \bot)
     \end{equation}
   \end{itemize}
   \item[t-proposition] $ $
   \begin{itemize}
-    \item For every “$a$ happens-at $t_i$” in $\tau$ we add in $F$:
+    \item For every “$a$ happens-at $t_i$” in $D$ we add in $F$:
     \begin{equation}\tag{$P_t.1$}
       \next^{i}a
     \end{equation}
-%    \item For all $a$ in $\Delta$ and all $t_i$ in $\Pi$, if “$a$ happens-at $t_i$” is not in $\tau$ we add in $F$:
+%    \item For all $a$ in $\Delta$ and all $t_i$ in $\Pi$, if “$a$ happens-at $t_i$” is not in $D$ we add in $F$:
 %    \begin{equation}\tag{$P_t.2$}
 %      \next^{i}\neg a
 %    \end{equation}
@@ -103,12 +103,12 @@ In the the Discrete Event Calculus, we only describe a time-point depending of t
   \item
     For every $f$ in $\Phi$ we add in $F$:
     \begin{equation}\tag{$IA.1$}
-      \alwaysF((f \land \neg termination(f)) \rightarrow f)
+      \alwaysF(\previous(f \land \neg termination(f)) \rightarrow f)
     \end{equation}
   \item
     For every $f$ in $\Phi$ we add in $F$:
     \begin{equation}\tag{$IA.2$}
-      \alwaysF((\neg f \land \neg initiation(f)) \rightarrow \neg f)
+      \alwaysF(\previous(\neg f \land \neg initiation(f)) \rightarrow \neg f)
     \end{equation}
 \end{itemize}
 
