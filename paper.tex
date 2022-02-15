@@ -8,6 +8,7 @@
 \usepackage{url}\urlstyle{tt}
 \usepackage{comments}
 \usepackage{listings}
+\usepackage{amsthm}
 
 \input{dtel}
 
@@ -24,43 +25,18 @@
 
 \maketitle
 
-\section{Action Langage E}
-This paper describe a translation of the Action Language E (which closely resemble Event Calculus in multiples ways) into $LTL_f$ and $TEL_f$.
-
-The goal is to start from a domain language $E=\langle T,A,F\rangle$ containing :
-\begin{itemize}
-  \item $T$ a set of $n$ natural numbers from $0$ to $n-1$, representing timepoints.
-  \item $A$ a set of actions.
-  \item $F$ a set of fluents.
-\end{itemize}
-and a domain description $D$ containing the propositions:
-\begin{itemize}
-  \item $a$ initiates $f$ when $c$.\footnote{$c$ is a set of fluent and negated fluent}
-  \item $a$ terminates $f$ when $c$.\footnotemark[1]
-  \item $a$ happens-at $t$.
-  \item $f$ holds-at $t$.
-  \item $\neg f$ holds-at $t$.
-\end{itemize}
-
-and to get a set of temporal propositions $S_a$ and formulas $S_f$, such that all formulas of $S_f$ are true for a finite traces if and only if the corresponding interpretation $H$ of $E$ is a model of $D$.
-
-\input{translation}
-\input{example}
-\input{translation_e}
-\input{translation_telingo}
+\input{ale}
+%\input{translation}
+%\input{example}
+%\input{translation_e}
+%\input{translation_telingo}
 %\input{abstract}
 %\input{introduction}
 %\input{background}
 %\input{approach}
 %\input{discussion}
 
-\section{Todo}
 
-\begin{itemize}
-  \item Reduce the trace size? Do we need all timepoints, or only the ones with actions?
-  \item $LTL_f$ into $TEL$ ... into $telingo$
-  \item actions with duration (which probably will need metric temporal logic)
-\end{itemize}
 
 \printbibliography{}
 

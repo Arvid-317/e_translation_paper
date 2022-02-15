@@ -99,12 +99,12 @@ In this section, I wanted to explore alternative ways to express the axioms of $
   \item
     For every $f$ in $\Phi$ we add in $S_f$:
     \begin{equation}\tag{$SA.1$}
-      \alwaysF((f \trigger \neg termination(f)) \rightarrow f)
+      \alwaysF(((\previous \neg termination(f)) \since f) \rightarrow f)
     \end{equation}
   \item
     For every $f$ in $\Phi$ we add in $S_f$:
     \begin{equation}\tag{$SA.2$}
-      \alwaysF((\neg f \trigger \neg initiation(f)) \rightarrow \neg f)
+      \alwaysF(((\previous \neg initiation(f)) \since \neg f) \rightarrow \neg f)
     \end{equation}
 \end{itemize}
 

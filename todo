@@ -1,0 +1,8 @@
+\section{Todo}
+
+\begin{itemize}
+  \item actions with duration (which probably will need metric temporal logic)
+  \item add definition (c!)
+  \item formulate results $LTL_f$ $TEL_f$
+  \item proove alternative formulations
+\end{itemize}
