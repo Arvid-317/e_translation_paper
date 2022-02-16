@@ -5,60 +5,39 @@
 
 \subsection{Domain langage and domain description}
 
-\begin{definition}[domain language]
-  A \emph{domain language} is a tuple $\langle T,A,F\rangle$. $T$ is a non-empty set of natural numbers called timepoints, such as $\forall t \in [0..|T|), t \in T$.
-  $A$ is a non-empty set of action constants and $F$ is a non-empty set of fluent constants.
-\end{definition}
-
-\begin{definition}[fluent literal]
-  A \emph{fluent literal} of $\mathcal{E}$ is an expression either of the form $f$ or of the form $\neg f$, where $f \in F$.
-\end{definition}
-
-\begin{definition}[condition]
-  A \emph{condition} of $E$ is a set of fluent literal.
-\end{definition}
-
-\begin{definition}[c-proposition]
-  A \emph{c-proposition} in $\mathcal{E}$ is an expression either of the form
-  $$a \text{ \textbf{initiates} } f \text{  \textbf{when} } c$$
-  or of the form
-  $$a \text{ \textbf{terminates} } f \text{  \textbf{when} } c$$
-  where $f$ is a fluent literal, $a$ is an action constant and $c$ is a condition.
-\end{definition}
-
-\begin{definition}[h-proposition]
-  A \emph{h-proposition} in $\mathcal{E}$ is an expression of the form
-  $$a \text{  \textbf{happens-at} } t$$
-  where $a$ is an action constant and $t$ is a timepoint.
-\end{definition}
-
-\begin{definition}[t-proposition]
-  A \emph{t-proposition} in $\mathcal{E}$ is an expression of the form
-  $$l \text{  \textbf{holds-at} } t$$
-  where $l$ is an fluent literal and $t$ is a timepoint.
-\end{definition}
-
-\begin{definition}[domain description]
-  A \emph{domain description} in $\mathcal{E}$ is a set of c-proposition, h-proposition and t-proposition.
-\end{definition}
+\begin{itemize}
+  \item A \emph{domain language} is a tuple $\langle A,F\rangle$.
+  \item $A$ is a non-empty set of action constants $a$.
+  \item $F$ is a non-empty set of fluent constants $f$.
+  \item A \emph{fluent literal} is either of the form $f$ or of the form $\neg f$.
+  \item A \emph{condition} is a cojunction of fluent literal.
+  \item A \emph{c-proposition} is an expression of the form
+    $$a \text{ \textbf{initiates} } f \text{  \textbf{when} } c$$
+    or of the form
+    $$a \text{ \textbf{terminates} } f \text{  \textbf{when} } c$$
+    where $f$ is a fluent constant, $a$ is an action constant and $c$ is a condition.
+  \item A \emph{h-proposition} is an expression of the form
+    $$a \text{  \textbf{happens-at} } t$$
+    where $a$ is an action constant and $t \in \mathbb{N}$.
+  \item A \emph{t-proposition} is an expression of the form
+    $$l \text{  \textbf{holds-at} } t$$
+    where $l$ is an fluent literal and $t \in \mathbb{N}$.
+  \item A \emph{domain description} is a set of c, h and t-proposition.
+\end{itemize}
 
 \subsection{Interpretation and model}
 
-\begin{definition}[interpretation]
-  An \emph{interpretation} in $\mathcal{E}$ is a mapping
-  $$H:F,T \mapsto \{ \text{true;false} \}$$
-\end{definition}
-
-\begin{definition}[point satisfaction]
-  Given a condition $c$ and a timepoint $t$, an interpretation $H$ \emph{satisfies $c$ at $t$} if
-  \begin{itemize}
-    \item for each fluent constant $f\in c$, $H(f,t)=\text{true}$
-    \item for each fluent literal of the form $\neg f\in c$, $H(f,t)=\text{false}$
-  \end{itemize}
-\end{definition}
+\begin{itemize}
+  \item An \emph{interpretation} $N$ is a trace.
+  \item Given a cojunction of fluent literal $c$ and $t \in \mathbb{N}$, an interpretation $N,t \vDash c$ if
+    \begin{itemize}
+      \item for each fluent constant $f\in c$, $N,t \vDash f$
+      \item for each fluent literal $\neg f\in c$, $N,t \nvDash f$
+    \end{itemize}
+\end{itemize}
 
 \begin{definition}[initiation/termination point]
-  Let $H$ be an interpretation of $\mathcal{E}$, let $D$ be a domain description, let $f$ be a fluent and let $t$ be a timepoint. $t$ is an \emph{initiation-point} (respectively \emph{termination-point}) for $f$ in $H$ relative to $D$ iff there is an action $a$ such that
+  Let $H$ be an interpretation , let $D$ be a domain description, let $f$ be a fluent and let $t$ be a timepoint. $t$ is an \emph{initiation-point} (respectively \emph{termination-point}) for $f$ in $H$ relative to $D$ iff there is an action $a$ such that
   \begin{enumerate}
     \item there is in $D$ both an h-proposition of the form $a \text{  \textbf{happens-at} } t$ and a c-proposition of the form $a \text{ \textbf{initiates} } f \text{  \textbf{when} } c$ (respectively $a \text{ \textbf{terminates} } f \text{  \textbf{when} } c$)
     \item $H$ satisfies $c$ at $t$.
@@ -66,7 +45,7 @@
 \end{definition}
 
 \begin{definition}[model]
-  Given a domain description $D$ in $\mathcal{E}$, an interpretation $H$ of $\mathcal{E}$ is a \emph{model} of $D$ iff, for every fluent constants $f$ and every timepoints $t$, $t_1$ and $t_3$ such as $t_1 < t_3$, the following properties hold:
+  Given a domain description $D$, an interpretation $H$  is a \emph{model} of $D$ iff, for every fluent constants $f$ and every timepoints $t$, $t_1$ and $t_3$ such as $t_1 < t_3$, the following properties hold:
   \begin{enumerate}
     \item If there is no initiation-point or termination-point $t_2$ for $f$ in $H$ relative to $D$, with $t_1 \leq t_2 < t_3$, then $H(f,t_1)=H(f,t_3)$.
     \item If $t_1$ is an initiation-point for $f$ in $H$ relative to $D$, and there is no termination-point $t_2$ for $f$ in $H$ relative to $D$, with $t_1 < t_2 < t_3$, then $H(f,t_3)=\text{true}$.
