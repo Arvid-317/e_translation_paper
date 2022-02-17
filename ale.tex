@@ -12,15 +12,15 @@
   \item A \emph{fluent literal} is either of the form $f$ or of the form $\neg f$.
   \item A \emph{condition} is a cojunction of fluent literal.
   \item A \emph{c-proposition} is an expression of the form
-    $$a \text{ \textbf{initiates} } f \text{  \textbf{when} } c$$
+    $$a \text{ \textbf{initiates} } f \text{ \textbf{when} } c$$
     or of the form
-    $$a \text{ \textbf{terminates} } f \text{  \textbf{when} } c$$
+    $$a \text{ \textbf{terminates} } f \text{ \textbf{when} } c$$
     where $f$ is a fluent constant, $a$ is an action constant and $c$ is a condition.
   \item A \emph{h-proposition} is an expression of the form
-    $$a \text{  \textbf{happens-at} } t$$
+    $$a \text{ \textbf{happens-at} } t$$
     where $a$ is an action constant and $t \in \mathbb{N}$.
   \item A \emph{t-proposition} is an expression of the form
-    $$l \text{  \textbf{holds-at} } t$$
+    $$l \text{ \textbf{holds-at} } t$$
     where $l$ is an fluent literal and $t \in \mathbb{N}$.
   \item A \emph{domain description} is a set of c, h and t-proposition.
 \end{itemize}
@@ -34,26 +34,17 @@
       \item for each fluent constant $f\in c$, $N,t \vDash f$
       \item for each fluent literal $\neg f\in c$, $N,t \nvDash f$
     \end{itemize}
+  \item Given a trace $N$, a c-proposition of the form $a \text{ \textbf{initiates} } f \text{ \textbf{when} } c$ and a h-proposition of the form $a \text{ \textbf{happens-at} } t$, t is an \emph{initiation point of $f$} if $N,t \vDash c$.
+  \item Given a trace $N$, a c-proposition of the form $a \text{ \textbf{terminates} } f \text{ \textbf{when} } c$ and a h-proposition of the form $a \text{ \textbf{happens-at} } t$, t is an \emph{termination point of $f$} if $N,t \vDash c$.
+  \item Given a domain description $D$, a trace $N$ is a \emph{model} of $D$ iff, for every fluent constants $f$ the following properties hold:
+  \begin{enumerate}
+    \item For all $t,t'\in \mathbb{N}$ with $t<t'$, if there is no initiation point of $f$ called $t_i$ such as $t \leq t_i < t'$, and there is no termination point of $f$ called $t_t$ such as $t \leq t_t < t'$, then $N,t \vDash f <=> N,t' \vDash f$.
+    \item For all $t,t'\in \mathbb{N}$ with $t<t'$, if $t$ is an initiation point of $f$ and there is no termination point of $f$ called $t_t$ such as $t < t_t < t'$, then $N,t' \vDash f$.
+    \item For all $t,t'\in \mathbb{N}$ with $t<t'$, if $t$ is an termination point of $f$ and there is no initiation point of $f$ called $t_i$ such as $t < t_i < t'$, then $N,t' \nvDash f$.
+    \item For all t-proposition in $D$ of the form $f \text{ \textbf{holds-at} } t$, $N,t \vDash f$.
+    \item For all t-proposition in $D$ of the form $\neg f \text{ \textbf{holds-at} } t$, $N,t \nvDash f$.
+  \end{enumerate}
 \end{itemize}
-
-\begin{definition}[initiation/termination point]
-  Let $H$ be an interpretation , let $D$ be a domain description, let $f$ be a fluent and let $t$ be a timepoint. $t$ is an \emph{initiation-point} (respectively \emph{termination-point}) for $f$ in $H$ relative to $D$ iff there is an action $a$ such that
-  \begin{enumerate}
-    \item there is in $D$ both an h-proposition of the form $a \text{  \textbf{happens-at} } t$ and a c-proposition of the form $a \text{ \textbf{initiates} } f \text{  \textbf{when} } c$ (respectively $a \text{ \textbf{terminates} } f \text{  \textbf{when} } c$)
-    \item $H$ satisfies $c$ at $t$.
-  \end{enumerate}
-\end{definition}
-
-\begin{definition}[model]
-  Given a domain description $D$, an interpretation $H$  is a \emph{model} of $D$ iff, for every fluent constants $f$ and every timepoints $t$, $t_1$ and $t_3$ such as $t_1 < t_3$, the following properties hold:
-  \begin{enumerate}
-    \item If there is no initiation-point or termination-point $t_2$ for $f$ in $H$ relative to $D$, with $t_1 \leq t_2 < t_3$, then $H(f,t_1)=H(f,t_3)$.
-    \item If $t_1$ is an initiation-point for $f$ in $H$ relative to $D$, and there is no termination-point $t_2$ for $f$ in $H$ relative to $D$, with $t_1 < t_2 < t_3$, then $H(f,t_3)=\text{true}$.
-    \item If $t_1$ is an termination-point for $f$ in $H$ relative to $D$, and there is no initiation-point $t_2$ for $f$ in $H$ relative to $D$, with $t_1 < t_2 < t_3$, then $H(f,t_3)=\text{false}$.
-    \item For all t-proposition in $D$ of the form $f \text{  \textbf{holds-at} } t$, $H(f,t)=\text{true}$.
-    \item For all t-proposition in $D$ of the form $\neg f \text{  \textbf{holds-at} } t$, $H(f,t)=\text{false}$.
-  \end{enumerate}
-\end{definition}
 
 \subsection{Example: The gun}
 
@@ -64,25 +55,9 @@
   \item $F=\{loaded;dead\}$.
   \item $D$ is composed of all the following propositions:
   \begin{itemize}
-    \item $shoot \text{ \textbf{initiates} } dead \text{  \textbf{when} } \{loaded\}$
-    \item $shoot \text{ \textbf{terminates} } loaded \text{  \textbf{when} } \{\}$
-    \item $shoot \text{  \textbf{happens-at} } 0$
-    \item $dead \text{  \textbf{holds-at} } 1$
+    \item $shoot \text{ \textbf{initiates} } dead \text{ \textbf{when} } \{loaded\}$
+    \item $shoot \text{ \textbf{terminates} } loaded \text{ \textbf{when} } \{\}$
+    \item $shoot \text{ \textbf{happens-at} } 0$
+    \item $dead \text{ \textbf{holds-at} } 1$
   \end{itemize}
 \end{itemize}
-
-There is three models of $D$ :
-\begin{enumerate}
-  \item \begin{itemize}
-    \item $H(loaded,0)=H(loaded,1)=\text{false}$
-    \item $H(dead,0)=H(dead,1)=\text{true}$
-  \end{itemize}
-  \item \begin{itemize}
-    \item $H(loaded,0)=\text{true}$, $H(loaded,1)=\text{false}$
-    \item $H(dead,0)=H(dead,1)=\text{true}$
-  \end{itemize}
-  \item \begin{itemize}
-    \item $H(loaded,0)=\text{true}$, $H(loaded,1)=\text{false}$
-    \item $H(dead,0)=\text{false}$, $H(dead,1)=\text{true}$.
-  \end{itemize}
-\end{enumerate}

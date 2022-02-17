@@ -8,15 +8,13 @@ thing(i(F)) :- fluent(F).
 
 time(0..4).
 
-holds(n(F),T) :- not holds(F,T), time(T), thing(F).
-
-since(A,B,T) :- since(A,B,T-1), holds(A,T).
-since(A,B,T) :- holds(B,T), thing(A).
+since(T) :- not holds(t_f,T-1), since(T-1).
+since(T) :- holds(f,T-1), not holds(t_f,T-1).
 
 %inertia
-holds(f,T) :- time(T), since(n(t(f)),f,T).
+holds(f,T) :- time(T), since(T).
 %initiation
-holds(f,T) :- time(T), holds(i(f),T-1).
+holds(f,T) :- time(T), holds(i_f,T-1).
 %initial state
 {holds(f,0)}.
 
