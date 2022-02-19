@@ -6,10 +6,8 @@
 \subsection{Domain langage and domain description}
 
 \begin{itemize}
-  \item A \emph{domain language} is a tuple $\langle A,F\rangle$.
-  \item $A$ is a non-empty set of action constants $a$.
-  \item $F$ is a non-empty set of fluent constants $f$.
-  \item A \emph{fluent literal} is either of the form $f$ or of the form $\neg f$.
+  \item A \emph{domain language} consist of a non-empty set of action constants and a non-empty set of fluent constants.
+  \item A \emph{fluent literal} is either a flient constant or his negation.
   \item A \emph{condition} is a cojunction of fluent literal.
   \item A \emph{c-proposition} is an expression of the form
     $$a \text{ \textbf{initiates} } f \text{ \textbf{when} } c$$
@@ -18,11 +16,11 @@
     where $f$ is a fluent constant, $a$ is an action constant and $c$ is a condition.
   \item A \emph{h-proposition} is an expression of the form
     $$a \text{ \textbf{happens-at} } t$$
-    where $a$ is an action constant and $t \in \mathbb{N}$.
+    where $a$ is an action constant and $t \in \mathbb{N} \cup \{0\}$.
   \item A \emph{t-proposition} is an expression of the form
     $$l \text{ \textbf{holds-at} } t$$
-    where $l$ is an fluent literal and $t \in \mathbb{N}$.
-  \item A \emph{domain description} is a set of c, h and t-proposition.
+    where $l$ is an fluent literal and $t \in \mathbb{N} \cup \{0\}$.
+  \item A \emph{domain description} is a set of c, h and t-propositions.
 \end{itemize}
 
 \subsection{Interpretation and model}
@@ -34,15 +32,14 @@
       \item for each fluent constant $f\in c$, $N,t \vDash f$
       \item for each fluent literal $\neg f\in c$, $N,t \nvDash f$
     \end{itemize}
-  \item Given a trace $N$, a c-proposition of the form $a \text{ \textbf{initiates} } f \text{ \textbf{when} } c$ and a h-proposition of the form $a \text{ \textbf{happens-at} } t$, t is an \emph{initiation point of $f$} if $N,t \vDash c$.
-  \item Given a trace $N$, a c-proposition of the form $a \text{ \textbf{terminates} } f \text{ \textbf{when} } c$ and a h-proposition of the form $a \text{ \textbf{happens-at} } t$, t is an \emph{termination point of $f$} if $N,t \vDash c$.
+  \item Given a trace $N$, a c-proposition of the form $a \text{ \textbf{initiates} } f \text{ \textbf{when} } c$ and a h-proposition of the form $a \text{ \textbf{happens-at} } t$, $t$ is an \emph{initiation point of $f$} if $N,t \vDash c$.
+  \item Given a trace $N$, a c-proposition of the form $a \text{ \textbf{terminates} } f \text{ \textbf{when} } c$ and a h-proposition of the form $a \text{ \textbf{happens-at} } t$, $t$ is an \emph{termination point of $f$} if $N,t \vDash c$.
   \item Given a domain description $D$, a trace $N$ is a \emph{model} of $D$ iff, for every fluent constants $f$ the following properties hold:
   \begin{enumerate}
-    \item For all $t,t'\in \mathbb{N}$ with $t<t'$, if there is no initiation point of $f$ called $t_i$ such as $t \leq t_i < t'$, and there is no termination point of $f$ called $t_t$ such as $t \leq t_t < t'$, then $N,t \vDash f <=> N,t' \vDash f$.
-    \item For all $t,t'\in \mathbb{N}$ with $t<t'$, if $t$ is an initiation point of $f$ and there is no termination point of $f$ called $t_t$ such as $t < t_t < t'$, then $N,t' \vDash f$.
-    \item For all $t,t'\in \mathbb{N}$ with $t<t'$, if $t$ is an termination point of $f$ and there is no initiation point of $f$ called $t_i$ such as $t < t_i < t'$, then $N,t' \nvDash f$.
-    \item For all t-proposition in $D$ of the form $f \text{ \textbf{holds-at} } t$, $N,t \vDash f$.
-    \item For all t-proposition in $D$ of the form $\neg f \text{ \textbf{holds-at} } t$, $N,t \nvDash f$.
+    \item For all $t,t'\in [0..\lamda)$ with $t<t'$, if there is no initiation point $t_i$ of $f$ such as $t \leq t_i < t'$, and there is no termination point $t_t$ of $f$ such as $t \leq t_t < t'$, then $N,t \vDash f <=> N,t' \vDash f$.
+    \item For all $t,t'\in [0..\lamda)$ with $t<t'$, if $t$ is an initiation point of $f$ and there is no termination point of $f$ called $t_t$ such as $t < t_t < t'$, then $N,t' \vDash f$.
+    \item For all $t,t'\in [0..\lamda)$ with $t<t'$, if $t$ is an termination point of $f$ and there is no initiation point of $f$ called $t_i$ such as $t < t_i < t'$, then $N,t' \nvDash f$.
+    \item For all t-proposition in $D$ of the form $l \text{ \textbf{holds-at} } t$, $N,t \vDash l$.
   \end{enumerate}
 \end{itemize}
 
