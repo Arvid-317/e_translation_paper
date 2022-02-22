@@ -1,11 +1,25 @@
 \section{Temporal Equilibrium Logic $TEL_f$}\label{sec:telf}
 
-Temporal Equilibrium Logic can be described from Temporal Here and There.
+Temporal Equilibrium Logic can be defined from Temporal Here and There, as described in \cite{cakascsc18a}.
 
 \begin{itemize}
   \item \emph{Temporal formulas} are defined as follow :
   $$\psi ::= a | \bot | \psi_1\otimes\psi_2 | \previous\psi | \psi_1\since\psi_2 | \psi_1\trigger\psi_2 | \next\psi | \psi_1\until\psi_2 | \psi_1\release\psi_2 $$
   where $a$ is an atom and $\otimes$ is any binary Boolean connective $\otimes \in \{\rightarrow, \wedge, \vee\}$.
+  \item
 \end{itemize}
 
 \section{Translation}\label{sec:trans}
+
+\begin{itemize}
+  \item In Action Langage $\mathcal{E}$, only fluents are present in the trace. Actions only serves to define initiations and terminations points, which are properties of states of the trace.
+
+  To translate that, we also add the actions and initiation/termination points of each fluent as atoms.
+  \item The propositions can be translated into temporal formulas as follow :
+  \begin{itemize}
+    \item \ref{c1} can be translated into $\alwaysF((a\land c)\rightarrow initiation(f))$.
+    \item \ref{c2} can be translated into $\alwaysF((a\land c)\rightarrow termination(f))$.
+    \item \ref{h} can be translated into $\next^{t}(\neg l\rightarrow \bot)$.
+    \item \ref{t} can be translated into $\next^{t}a$.
+  \end{itemize}
+\end{itemize}

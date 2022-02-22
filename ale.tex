@@ -7,24 +7,24 @@
 
 \begin{itemize}
   \item A \emph{domain language} consist of a non-empty set of action constants and a non-empty set of fluent constants.
-  \item A \emph{fluent literal} is either a flient constant or his negation.
-  \item A \emph{condition} is a cojunction of fluent literal.
+  \item A \emph{fluent literal} is either a fluent constant or his negation.
+  \item A \emph{condition} is a conjunction of fluent literal.
   \item A \emph{c-proposition} is an expression of the form
-    \begin{equation}\label{c1}
+    \begin{equation}\label{c1}\tag{$p_{c1}$}
     	a \text{ \textbf{initiates} } f \text{ \textbf{when} } c
     \end{equation}
     or of the form
-    \begin{equation}\label{c2}
+    \begin{equation}\label{c2}\tag{$p_{c2}$}
     	a \text{ \textbf{terminates} } f \text{ \textbf{when} } c
     \end{equation}
     where $f$ is a fluent constant, $a$ is an action constant and $c$ is a condition.
   \item A \emph{h-proposition} is an expression of the form
-    \begin{equation}\label{h}
+    \begin{equation}\label{h}\tag{$p_h$}
       a \text{ \textbf{happens-at} } t
     \end{equation}
     where $a$ is an action constant and $t \in \mathbb{N} \cup \{0\}$.
   \item A \emph{t-proposition} is an expression of the form
-    \begin{equation}\label{h}
+    \begin{equation}\label{t}\tag{$p_t$}
       l \text{ \textbf{holds-at} } t
     \end{equation}
     where $l$ is an fluent literal and $t \in \mathbb{N} \cup \{0\}$.
@@ -33,31 +33,29 @@
 
 \subsection{Interpretation and model}
 
+In this section, satisfaction $\vDash$ is the common $TEL$ satisfaction, as described in \cite{cakascsc18a}.
+
 \begin{itemize}
-  \item An \emph{interpretation} $N$ is a trace.
-  \item Given a cojunction of fluent literal $c$ and $t \in \mathbb{N}$, an interpretation $N,t \vDash c$ if
-    \begin{itemize}
-      \item for each fluent constant $f\in c$, $N,t \vDash f$
-      \item for each fluent literal $\neg f\in c$, $N,t \nvDash f$
-    \end{itemize}
-  \item Given a trace $N$, a c-proposition of the form $a \text{ \textbf{initiates} } f \text{ \textbf{when} } c$ and a h-proposition of the form $a \text{ \textbf{happens-at} } t$, $t$ is an \emph{initiation point of $f$} if $N,t \vDash c$.
-  \item Given a trace $N$, a c-proposition of the form $a \text{ \textbf{terminates} } f \text{ \textbf{when} } c$ and a h-proposition of the form $a \text{ \textbf{happens-at} } t$, $t$ is an \emph{termination point of $f$} if $N,t \vDash c$.
+%  \item Given a conjunction of fluent literal $c$ and $t \in \mathbb{N}$, an interpretation $N,t \vDash c$ if
+%    \begin{itemize}
+%      \item for each fluent constant $f\in c$, $N,t \vDash f$
+%      \item for each fluent literal $\neg f\in c$, $N,t \nvDash f$
+%    \end{itemize}
+  \item Given a trace $N$, a c-proposition \ref{c1} and a h-proposition \ref{h}, $t$ is an \emph{initiation point of $f$} if $N,t \vDash c$ (with $t$ as in \ref{h} and $c$ as in \ref{c1}).
+  \item Given a trace $N$, a c-proposition \ref{c2} and a h-proposition \ref{h}, $t$ is an \emph{termination point of $f$} if $N,t \vDash c$ (with $t$ as in \ref{h} and $c$ as in \ref{c2}).
   \item Given a domain description $D$, a trace $N$ is a \emph{model} of $D$ iff, for every fluent constants $f$ the following properties hold:
   \begin{enumerate}
-    \item For all $t,t'\in [0..\lamda)$ with $t<t'$, if there is no initiation point $t_i$ of $f$ such as $t \leq t_i < t'$, and there is no termination point $t_t$ of $f$ such as $t \leq t_t < t'$, then $N,t \vDash f <=> N,t' \vDash f$.
-    \item For all $t,t'\in [0..\lamda)$ with $t<t'$, if $t$ is an initiation point of $f$ and there is no termination point of $f$ called $t_t$ such as $t < t_t < t'$, then $N,t' \vDash f$.
-    \item For all $t,t'\in [0..\lamda)$ with $t<t'$, if $t$ is an termination point of $f$ and there is no initiation point of $f$ called $t_i$ such as $t < t_i < t'$, then $N,t' \nvDash f$.
-    \item For all t-proposition in $D$ of the form $l \text{ \textbf{holds-at} } t$, $N,t \vDash l$.
+    \item For all $t,t'\in [0..\lambda)$ with $t<t'$, if there is no initiation point $t_i$ of $f$ such as $t \leq t_i < t'$, and there is no termination point $t_t$ of $f$ such as $t \leq t_t < t'$, then $N,t \vDash f \leftrightarrow N,t' \vDash f$.
+    \item For all $t,t'\in [0..\lambda)$ with $t<t'$, if $t$ is an initiation point of $f$ and there is no termination point of $f$ called $t_t$ such as $t < t_t < t'$, then $N,t' \vDash f$.
+    \item For all $t,t'\in [0..\lambda)$ with $t<t'$, if $t$ is an termination point of $f$ and there is no initiation point of $f$ called $t_i$ such as $t < t_i < t'$, then $N,t' \nvDash f$.
+    \item For all t-proposition \ref{t} in $D$, $N,t \vDash l$ (with $t$ and $l$ as in \ref{t}).
   \end{enumerate}
 \end{itemize}
 
 \subsection{Example: The gun}
 
 \begin{itemize}
-  \item $\mathcal{E}=\langle T,A,F\rangle$
-  \item $T=\{0..1\}$
-  \item $A=\{shoot\}$
-  \item $F=\{loaded;dead\}$.
+  \item $\mathcal{E}=\langle \{shoot\},\{loaded;dead\}\rangle$
   \item $D$ is composed of all the following propositions:
   \begin{itemize}
     \item $shoot \text{ \textbf{initiates} } dead \text{ \textbf{when} } \{loaded\}$
