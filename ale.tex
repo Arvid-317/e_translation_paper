@@ -1,5 +1,7 @@
 \section{Action Langage $\mathcal{E}$}\label{sec:e}
 
+Thoses definitions are inspired of the ones form \ref{kakmil97a}.
+
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 
@@ -8,13 +10,13 @@
 \begin{itemize}
   \item A \emph{domain language} consist of a non-empty set of action constants and a non-empty set of fluent constants.
   \item A \emph{fluent literal} is either a fluent constant or his negation.
-  \item A \emph{condition} is a conjunction of fluent literal.
+  \item A \emph{condition} is a conjunction of fluent literal: $f_1\land .. \land f_n \land \neg f_{n+1} \land .. \land \neg f_m$
   \item A \emph{c-proposition} is an expression of the form
-    \begin{equation}\label{c1}\tag{$p_{c1}$}
+    \begin{equation}\label{c1}\tag{$p_{ci}$}
     	a \text{ \textbf{initiates} } f \text{ \textbf{when} } c
     \end{equation}
     or of the form
-    \begin{equation}\label{c2}\tag{$p_{c2}$}
+    \begin{equation}\label{c2}\tag{$p_{ct}$}
     	a \text{ \textbf{terminates} } f \text{ \textbf{when} } c
     \end{equation}
     where $f$ is a fluent constant, $a$ is an action constant and $c$ is a condition.
@@ -58,8 +60,8 @@ In this section, satisfaction $\vDash$ is the common $TEL$ satisfaction, as desc
   \item $\mathcal{E}=\langle \{shoot\},\{loaded;dead\}\rangle$
   \item $D$ is composed of all the following propositions:
   \begin{itemize}
-    \item $shoot \text{ \textbf{initiates} } dead \text{ \textbf{when} } \{loaded\}$
-    \item $shoot \text{ \textbf{terminates} } loaded \text{ \textbf{when} } \{\}$
+    \item $shoot \text{ \textbf{initiates} } dead \text{ \textbf{when} } loaded$
+    \item $shoot \text{ \textbf{terminates} } loaded \text{ \textbf{when} } \top$
     \item $shoot \text{ \textbf{happens-at} } 0$
     \item $dead \text{ \textbf{holds-at} } 1$
   \end{itemize}

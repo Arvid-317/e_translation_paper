@@ -15,11 +15,38 @@ Temporal Equilibrium Logic can be defined from Temporal Here and There, as descr
   \item In Action Langage $\mathcal{E}$, only fluents are present in the trace. Actions only serves to define initiations and terminations points, which are properties of states of the trace.
 
   To translate that, we also add the actions and initiation/termination points of each fluent as atoms.
-  \item The propositions can be translated into temporal formulas as follow :
+  \item Instead of redefining what a model is, we'll keep the definition of a model from \cite{cakascsc18a}.
+  \item We can express the axioms of the Action langage $\mathcal{E}$ as follow:
+  \begin{itemize}
+    \item For every fluent literal $f$ we add in $F$:
+      \begin{equation}\tag{$A.1$}
+        \alwaysF(((\previous \neg termination(f)) \since f) \rightarrow f)
+      \end{equation}
+    \item For every fluent literal $f$ we add in $F$:
+      \begin{equation}\tag{$A.2$}
+        \alwaysF(initiation(f)\rightarrow\wnext f)
+      \end{equation}
+  \end{itemize}
+  \item The propositions can be translated into temporal formulas as follow:
   \begin{itemize}
     \item \ref{c1} can be translated into $\alwaysF((a\land c)\rightarrow initiation(f))$.
     \item \ref{c2} can be translated into $\alwaysF((a\land c)\rightarrow termination(f))$.
     \item \ref{h} can be translated into $\next^{t}(\neg l\rightarrow \bot)$.
     \item \ref{t} can be translated into $\next^{t}a$.
   \end{itemize}
+
+\subsection{Example: The gun}
+
+Here is the list of formulas given by the translation:
+\begin{itemize}
+  \item $\alwaysF(((\previous \neg termination(loaded)) \since f) \rightarrow loaded)$
+  \item $\alwaysF(((\previous \neg termination(dead)) \since f) \rightarrow dead)$
+  \item $\alwaysF(initiation(loaded)\rightarrow\wnext loaded)$
+  \item $\alwaysF(initiation(dead)\rightarrow\wnext dead)$
+  \item $\alwaysF((shoot\land loaded)\rightarrow initiation(dead))$
+  \item $\alwaysF((shoot)\rightarrow termination(loaded))$.
+  \item $\next^{0}shoot$ which is equivalent to $shoot$.
+  \item $\next^{1}(\neg dead\rightarrow \bot)$ which is equivalent to $\next(\neg dead\rightarrow \bot)$.
+\end{itemize}
+
 \end{itemize}
